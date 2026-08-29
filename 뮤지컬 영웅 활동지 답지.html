@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>뮤지컬 영웅 활동지 [교사용 답안]</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Serif KR',serif;background:#b8b8b8;color:#111;}
+
+.page{
+  width:210mm;
+  height:297mm;
+  overflow:hidden;
+  margin:0 auto 16px;
+  background:#fff;
+  padding:8mm 11mm 8mm;
+  display:flex;
+  flex-direction:column;
+  page-break-after:always;
+  page-break-inside:avoid;
+  box-shadow:0 3px 14px rgba(0,0,0,.22);
+}
+@media print{
+  body{background:#fff;margin:0;padding:0;}
+  .page{margin:0;box-shadow:none;
+    page-break-after:always;page-break-inside:avoid;
+    width:210mm;height:297mm;}
+  @page{size:A4 portrait;margin:0;}
+}
+
+.sec-title{
+  font-family:'Nanum Myeongjo',serif;
+  font-size:14pt;font-weight:800;color:#111;
+  border-bottom:2.5px solid #444;
+  padding-bottom:3px;margin-bottom:5px;
+  letter-spacing:.05em;flex-shrink:0;
+}
+.sec-sub{
+  font-size:10pt;color:#444;
+  margin-bottom:4px;font-style:italic;flex-shrink:0;
+}
+.divider{width:100%;height:1px;background:#bbb;margin:5px 0;flex-shrink:0;}
+
+.chip{
+  font-size:9.5pt;background:#f0f0f0;
+  border:1px solid #aaa;border-radius:10px;
+  padding:2px 8px;color:#111;
+  display:inline-block;margin:2px 2px;
+  font-weight:600;
+}
+.blank{
+  display:inline-block;
+  border-bottom:2.5px solid #555;
+  border-radius:3px;padding:2px 5px;
+  font-weight:800;font-size:inherit;min-width:52px;
+}
+.blank-md{min-width:84px;}
+.blank-lg{min-width:106px;}
+
+.page-footer{
+  margin-top:auto;padding-top:4px;
+  border-top:1.5px solid #bbb;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:9pt;color:#777;flex-shrink:0;
+  font-weight:600;
+}
+.page-num{
+  width:22px;height:22px;border-radius:50%;
+  background:#333;color:#fff;
+  font-size:9pt;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ── PAGE 1 헤더 ── */
+.p1-header{
+  border:2px solid #aaa;border-radius:8px;
+  padding:9px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:5px;flex-shrink:0;
+}
+.p1-title{
+  font-family:'Nanum Myeongjo',serif;
+  font-size:26pt;font-weight:800;color:#111;
+  letter-spacing:.2em;line-height:1;
+}
+.p1-sub{font-size:9.5pt;color:#444;letter-spacing:.18em;margin-top:3px;font-weight:600;}
+.p1-info{font-size:9pt;color:#555;text-align:right;line-height:1.8;font-weight:600;}
+.p1-info b{color:#111;font-weight:800;}
+
+.stu-bar{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6px;margin-bottom:5px;flex-shrink:0;
+}
+.stu-cell{
+  border:2px solid #bbb;border-radius:6px;
+  padding:7px 12px;display:flex;align-items:center;gap:8px;
+}
+.stu-label{font-weight:800;color:#111;font-size:12pt;white-space:nowrap;}
+.stu-line{flex:1;border-bottom:2px solid #888;height:18px;}
+
+/* 정의 박스 */
+.def-box{
+  border:2px solid #bbb;border-left:5px solid #666;
+  border-radius:6px;padding:8px 12px;
+  font-size:12pt;line-height:1.8;color:#111;font-weight:600;
+  margin-bottom:5px;flex-shrink:0;
+}
+
+/* 3요소 */
+.elem-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:6px;margin-bottom:5px;flex-shrink:0;
+}
+.elem-card{
+  border:2px solid #bbb;border-radius:6px;
+  padding:8px 7px;text-align:center;
+}
+.elem-icon{font-size:14pt;display:block;margin-bottom:3px;}
+.elem-name{font-size:11pt;font-weight:800;color:#111;margin-bottom:2px;}
+.elem-desc{font-size:9pt;color:#444;line-height:1.35;font-weight:600;}
+
+/* 용어표 */
+.term-table{width:100%;border-collapse:collapse;font-size:10.5pt;flex-shrink:0;}
+.term-table th{
+  background:#e8e8e8;color:#111;
+  padding:7px 9px;font-weight:800;
+  border:1.5px solid #aaa;font-size:10.5pt;
+}
+.term-table td{
+  padding:7px 9px;border:1.5px solid #bbb;
+  vertical-align:middle;line-height:1.5;font-size:10.5pt;font-weight:600;
+}
+.term-table tr:nth-child(even) td{background:#fafafa;}
+.term-key{font-weight:800;color:#111;text-align:center;width:90px;}
+
+/* 비교표 */
+.comp-wrap{
+  width:100%;border:2px solid #aaa;
+  border-radius:6px;overflow:hidden;
+  margin-bottom:5px;flex-shrink:0;
+}
+.comp-head{
+  display:grid;
+  grid-template-columns:82px 1fr 1fr;
+  background:#e8e8e8;
+  border-bottom:2px solid #aaa;
+}
+.comp-head-cell{
+  padding:8px 8px;text-align:center;
+  font-weight:800;font-size:11pt;color:#111;
+  white-space:nowrap;
+}
+.comp-head-cell:not(:last-child){border-right:1.5px solid #bbb;}
+.comp-row{
+  display:grid;
+  grid-template-columns:82px 1fr 1fr;
+  border-bottom:1.5px solid #ccc;
+}
+.comp-row:last-child{border-bottom:none;}
+.c-key{
+  padding:11px 8px;
+  font-weight:800;font-size:10.5pt;color:#111;
+  background:#f2f2f2;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;white-space:nowrap;
+  border-right:1.5px solid #ccc;
+}
+.c-ans{
+  padding:0 8px;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  min-height:40px;
+}
+.c-ans:not(:last-child){border-right:1.5px solid #ccc;}
+
+/* ── PAGE 2 배역 ── */
+.char-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:7px;flex-shrink:0;
+}
+.char-card{
+  border-radius:6px;padding:9px 11px;
+  border:2px solid #bbb;border-left:4px solid #777;
+  display:flex;flex-direction:column;gap:4px;
+}
+.char-badge-sm{
+  font-size:8.5pt;padding:2px 8px;border-radius:10px;
+  font-weight:800;display:inline-block;align-self:flex-start;
+  border:1.5px solid #aaa;color:#222;margin-bottom:2px;
+  background:#f5f5f5;
+}
+.char-blank-name{
+  font-family:'Nanum Myeongjo',serif;
+  font-size:13.5pt;font-weight:800;
+  display:inline-block;min-width:78px;
+  border-bottom:2.5px solid #444;
+  border-radius:3px;padding:1px 6px;color:#111;
+}
+.char-desc-sm{font-size:9.5pt;color:#111;line-height:1.55;font-weight:600;}
+.bogi-chips{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px;}
+
+/* ── PAGE 3 줄거리 ── */
+.story-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6px;flex-shrink:0;
+}
+.story-card{
+  border-radius:6px;padding:9px 11px;
+  border:2px solid #bbb;border-left:4px solid #777;
+  display:flex;flex-direction:column;gap:4px;
+}
+.step-badge-sm{font-size:9pt;color:#444;font-weight:800;letter-spacing:.05em;}
+.scene-blank{
+  font-family:'Nanum Myeongjo',serif;
+  font-size:12pt;font-weight:800;
+  display:inline-block;min-width:78px;
+  border-bottom:2.5px solid #444;
+  border-radius:3px;padding:1px 6px;color:#111;
+}
+.scene-body-sm{font-size:9.5pt;color:#111;line-height:1.55;font-weight:600;}
+
+/* 순서배열 */
+.ord-table{width:100%;border-collapse:collapse;font-size:10.5pt;flex-shrink:0;}
+.ord-table th{
+  background:#e8e8e8;color:#111;
+  padding:8px 9px;font-weight:800;
+  text-align:center;border:1.5px solid #aaa;font-size:10.5pt;
+}
+.ord-table td{
+  padding:9px 10px;border:1.5px solid #bbb;
+  vertical-align:middle;line-height:1.5;font-size:10.5pt;font-weight:600;
+}
+.ord-table tr:nth-child(even) td{background:#fafafa;}
+.ord-num-cell{
+  width:96px;text-align:center;
+  font-size:11pt;font-weight:800;color:#111;
+  white-space:nowrap;
+}
+
+/* ── PAGE 4 넘버 ── */
+.number-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:7px;flex-shrink:0;margin-bottom:6px;
+}
+.number-card{
+  border-radius:6px;padding:11px 12px;
+  border:2px solid #bbb;border-left:4px solid #777;
+  display:flex;flex-direction:column;gap:5px;
+}
+.num-badge{font-size:9pt;color:#444;font-weight:800;letter-spacing:.08em;}
+.num-icon{font-size:14pt;}
+.num-title{
+  font-family:'Nanum Myeongjo',serif;
+  font-size:13pt;font-weight:800;color:#111;line-height:1.2;
+}
+.num-desc{font-size:9.5pt;color:#111;line-height:1.55;font-weight:600;}
+.num-q{font-size:9.5pt;color:#111;font-weight:800;margin-top:4px;}
+.write-lines{display:flex;flex-direction:column;gap:10px;margin-top:5px;}
+.wline{border-bottom:1.5px solid #aaa;height:20px;}
+
+/* 감상문 */
+.essay-box{
+  border:2px solid #bbb;border-left:4px solid #777;
+  border-radius:6px;padding:9px 13px;
+  flex-shrink:0;margin-bottom:6px;
+}
+.essay-q-sm{
+  font-size:11pt;font-weight:800;color:#111;
+  line-height:1.65;margin-bottom:7px;
+}
+.essay-q-sm em{color:#111;font-style:normal;font-weight:800;}
+.write-block{border:1.5px solid #bbb;border-radius:5px;padding:6px 10px;}
+.wl{border-bottom:1.5px solid #bbb;height:23px;}
+
+/* ══════ 교사용 답안 스타일 ══════ */
+.page{position:relative;overflow:hidden;}
+.page::before{
+  content:'교사용 답안';
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-32deg);
+  font-size:78px;font-weight:900;
+  color:rgba(220,0,0,.07);
+  white-space:nowrap;pointer-events:none;z-index:0;
+  letter-spacing:6px;
+}
+.page > *{position:relative;z-index:1;}
+.blank,.char-blank-name,.scene-blank{
+  color:#dc0000!important;font-weight:800;
+  border-bottom-color:#dc0000!important;
+  background:#fff0f0;
+}
+.ord-num-cell,.c-ans{color:#dc0000!important;font-weight:800;}
+.ans-note{
+  color:#dc0000;font-weight:700;font-size:9pt;
+  border:1.3px dashed #dc0000;border-radius:5px;
+  padding:4px 8px;margin-top:4px;background:#fff5f5;
+}
+.key-badge{
+  display:inline-block;background:#dc0000;color:#fff;
+  font-size:9pt;font-weight:800;border-radius:10px;
+  padding:2px 10px;letter-spacing:2px;margin-left:8px;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ PAGE 1 ══════════ -->
+<div class="page">
+
+  <div class="p1-header">
+    <div>
+      <div class="p1-title">영 웅</div>
+      <div class="p1-sub">MUSICAL · HERO · 활동지<span class="key-badge">교사용 답안</span></div>
+    </div>
+    <div class="p1-info">
+      초연 <b>2009</b>년 &nbsp;·&nbsp; 연출 <b>윤호진</b><br/>
+      영화판 <b>2022</b>년 개봉<br/>
+      안중근 의사의 마지막 1년
+    </div>
+  </div>
+
+  <div class="stu-bar">
+    <div class="stu-cell">
+      <span class="stu-label">학&nbsp;&nbsp;&nbsp;번</span>
+      <div class="stu-line"></div>
+    </div>
+    <div class="stu-cell">
+      <span class="stu-label">이&nbsp;&nbsp;&nbsp;름</span>
+      <div class="stu-line"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ① 뮤지컬이란? -->
+  <div class="sec-title">① 뮤지컬이란 무엇인가요?</div>
+  <div class="def-box">
+    <strong>뮤지컬(Musical)</strong>은 노래·춤·연기가 하나로 합쳐진
+    <span class="blank blank-lg">종합 무대 예술</span>입니다.
+  </div>
+  <div class="elem-grid">
+    <div class="elem-card">
+      <span class="elem-icon">🎵</span>
+      <div class="elem-name"><span class="blank blank-md">음악(노래)</span></div>
+      <div class="elem-desc">노래로 감정을 전달</div>
+    </div>
+    <div class="elem-card">
+      <span class="elem-icon">💃</span>
+      <div class="elem-name"><span class="blank blank-md">춤(무용)</span></div>
+      <div class="elem-desc">안무로 극을 표현</div>
+    </div>
+    <div class="elem-card">
+      <span class="elem-icon">🎬</span>
+      <div class="elem-name"><span class="blank blank-md">연기(연극)</span></div>
+      <div class="elem-desc">대사·표정으로 인물 표현</div>
+    </div>
+  </div>
+  <div class="sec-sub">
+    📌 보기 :
+    <span class="chip">음악(노래)</span>
+    <span class="chip">춤(무용)</span>
+    <span class="chip">연기(연극)</span>
+    <span class="chip">종합 무대 예술</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ★ 순서 변경: 주요 용어 → 위로 이동 -->
+  <div class="sec-title">주요 용어</div>
+  <table class="term-table">
+    <thead>
+      <tr><th style="width:90px;">용어</th><th>뜻</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="term-key"><span class="blank" style="min-width:52px;">서곡</span></td>
+        <td>공연 전 전체 분위기를 암시하는 관현악 연주</td>
+      </tr>
+      <tr>
+        <td class="term-key"><span class="blank" style="min-width:52px;">오프닝 넘버</span></td>
+        <td>공연 시작의 첫 번째 합창</td>
+      </tr>
+      <tr>
+        <td class="term-key"><span class="blank" style="min-width:52px;">아리아</span></td>
+        <td>주인공이 감정의 절정에서 부르는 독창</td>
+      </tr>
+      <tr>
+        <td class="term-key"><span class="blank" style="min-width:52px;">프로덕션 넘버</span></td>
+        <td>노래·춤·무대 장치가 모두 동원된 하이라이트 장면</td>
+      </tr>
+      <tr>
+        <td class="term-key"><span class="blank" style="min-width:52px;">커튼콜</span></td>
+        <td>공연 후 배우들이 관객에게 인사하는 장면</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="sec-sub" style="margin-top:4px;">
+    📌 보기 :
+    <span class="chip">서곡</span>
+    <span class="chip">오프닝 넘버</span>
+    <span class="chip">아리아</span>
+    <span class="chip">프로덕션 넘버</span>
+    <span class="chip">커튼콜</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ★ 순서 변경: 뮤지컬 vs 연극 → 아래로 이동 -->
+  <div class="sec-title">② 뮤지컬과 연극의 차이점</div>
+  <div class="sec-sub">빈칸에 알맞은 말을 보기에서 골라 쓰세요.</div>
+  <div class="comp-wrap">
+    <div class="comp-head">
+      <div class="comp-head-cell">비교 항목</div>
+      <div class="comp-head-cell">🎭 뮤지컬</div>
+      <div class="comp-head-cell">🎪 연극</div>
+    </div>
+    <div class="comp-row">
+      <div class="c-key">표현 방식</div>
+      <div class="c-ans">노래·춤·대사</div>
+      <div class="c-ans">대사 중심</div>
+    </div>
+    <div class="comp-row">
+      <div class="c-key">음악</div>
+      <div class="c-ans">핵심 서사 도구</div>
+      <div class="c-ans">배경음악 보조</div>
+    </div>
+    <div class="comp-row">
+      <div class="c-key">감정 전달</div>
+      <div class="c-ans">노래로 직접 표현</div>
+      <div class="c-ans">대사·표정으로 표현</div>
+    </div>
+    <div class="comp-row">
+      <div class="c-key">무대 구성</div>
+      <div class="c-ans">대규모·화려한 세트</div>
+      <div class="c-ans">간소한 무대 가능</div>
+    </div>
+  </div>
+  <div class="sec-sub">
+    📌 보기 :
+    <span class="chip">노래·춤·대사</span>
+    <span class="chip">대사 중심</span>
+    <span class="chip">핵심 서사 도구</span>
+    <span class="chip">배경음악 보조</span>
+    <span class="chip">노래로 직접 표현</span>
+    <span class="chip">대사·표정으로 표현</span>
+    <span class="chip">대규모·화려한 세트</span>
+    <span class="chip">간소한 무대 가능</span>
+  </div>
+
+  <div class="page-footer">
+    <span>🎭 뮤지컬 영웅 활동지 [교사용 답안]</span>
+    <div style="display:flex;align-items:center;gap:5px;">
+      <span>① 개념 · 용어 · ② 비교</span>
+      <div class="page-num">1</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ PAGE 2 ══════════ -->
+<div class="page">
+
+  <div class="sec-title">③ 주요 배역</div>
+  <div class="sec-sub">빈칸에 인물 이름을 보기에서 골라 쓰세요.</div>
+  <div class="char-grid">
+
+    <div class="char-card">
+      <span class="char-badge-sm">주인공 · 대한의군 참모중장</span>
+      <div><span class="char-blank-name">안중근</span></div>
+      <div class="char-desc-sm">
+        서른 살 조선 청년.<br/>
+        나라의 독립과 동양 평화를 위해<br/>
+        <strong>이토 히로부미 처단</strong>을 결심한 인물.
+      </div>
+      <div class="bogi-chips">
+        <span class="chip">이토 히로부미</span><span class="chip">치바 도시치</span>
+        <span class="chip">안중근</span><span class="chip">조마리아</span>
+        <span class="chip">우덕순</span><span class="chip">설희</span>
+      </div>
+    </div>
+
+    <div class="char-card">
+      <span class="char-badge-sm">여주인공 · 제국익문사 요원</span>
+      <div><span class="char-blank-name">설희</span></div>
+      <div class="char-desc-sm">
+        명성황후 시해를 목격한 궁녀 출신.<br/>
+        게이샤 '나미다'로 변장해<br/>
+        이토를 <strong>하얼빈으로 유인</strong>하는 데 성공.
+      </div>
+      <div class="bogi-chips">
+        <span class="chip">우덕순</span><span class="chip">안중근</span>
+        <span class="chip">조마리아</span><span class="chip">설희</span>
+        <span class="chip">치바 도시치</span><span class="chip">이토 히로부미</span>
+      </div>
+    </div>
+
+    <div class="char-card">
+      <span class="char-badge-sm">악역 · 일본 제국 초대 통감</span>
+      <div><span class="char-blank-name" style="font-size:11pt;">이토 히로부미</span></div>
+      <div class="char-desc-sm">
+        일본 제국주의 침략의 상징.<br/>
+        조선을 지배하려 한 장본인.<br/>
+        하얼빈에서 안중근에게 처단됨.
+      </div>
+      <div class="bogi-chips">
+        <span class="chip">설희</span><span class="chip">조마리아</span>
+        <span class="chip">이토 히로부미</span><span class="chip">안중근</span>
+        <span class="chip">치바 도시치</span><span class="chip">우덕순</span>
+      </div>
+    </div>
+
+    <div class="char-card">
+      <span class="char-badge-sm">일본인 간수 · 뤼순 감옥</span>
+      <div><span class="char-blank-name" style="font-size:11pt;">치바 도시치</span></div>
+      <div class="char-desc-sm">
+        처음엔 안중근을 증오했으나<br/>
+        고결한 인품에 감화됨.<br/>
+        안중근의 <strong>유묵을 평생 간직</strong>한 인물.
+      </div>
+      <div class="bogi-chips">
+        <span class="chip">조마리아</span><span class="chip">치바 도시치</span>
+        <span class="chip">우덕순</span><span class="chip">이토 히로부미</span>
+        <span class="chip">설희</span><span class="chip">안중근</span>
+      </div>
+    </div>
+
+    <div class="char-card">
+      <span class="char-badge-sm">안중근의 동지 · 단지동맹원</span>
+      <div><span class="char-blank-name">우덕순</span></div>
+      <div class="char-desc-sm">
+        안중근과 함께<br/>
+        <strong>하얼빈 거사</strong>를 준비한<br/>
+        독립운동가.
+      </div>
+      <div class="bogi-chips">
+        <span class="chip">안중근</span><span class="chip">이토 히로부미</span>
+        <span class="chip">우덕순</span><span class="chip">설희</span>
+        <span class="chip">조마리아</span><span class="chip">치바 도시치</span>
+      </div>
+    </div>
+
+    <div class="char-card">
+      <span class="char-badge-sm">안중근의 어머니</span>
+      <div><span class="char-blank-name">조마리아</span></div>
+      <div class="char-desc-sm">
+        아들의 순국 앞에 눈물 대신<br/>
+        <strong>수의를 직접 지어 보내며</strong><br/>
+        "옳은 일을 했으니 떳떳하라" 전함.
+      </div>
+      <div class="bogi-chips">
+        <span class="chip">치바 도시치</span><span class="chip">설희</span>
+        <span class="chip">우덕순</span><span class="chip">이토 히로부미</span>
+        <span class="chip">조마리아</span><span class="chip">안중근</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span>🎭 뮤지컬 영웅 활동지 [교사용 답안]</span>
+    <div style="display:flex;align-items:center;gap:5px;">
+      <span>③ 주요 배역</span>
+      <div class="page-num">2</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ PAGE 3 ══════════ -->
+<div class="page">
+
+  <div class="sec-title">④ 줄거리</div>
+  <div class="sec-sub">각 장면의 이름을 보기에서 골라 빈칸에 쓰세요.</div>
+  <div class="story-grid" style="margin-bottom:5px;">
+
+    <div class="story-card">
+      <div class="step-badge-sm">① 첫 번째 장면</div>
+      <div><span class="scene-blank">단지동맹</span></div>
+      <div class="scene-body-sm">
+        1909년 2월, 안중근과 11명의 동지들은<br/>
+        러시아 <strong>자작나무 숲</strong>에서 손가락을 잘라<br/>
+        피로 태극기에 '大韓獨立'을 쓰며 결의한다.
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="step-badge-sm">② 두 번째 장면</div>
+      <div><span class="scene-blank">동지들의 결의</span></div>
+      <div class="scene-body-sm">
+        안중근과 우덕순, 조도선은<br/>
+        각자의 역할을 분담하며<br/>
+        <strong>이토 처단 작전</strong>을 구체적으로 세운다.
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="step-badge-sm">③ 세 번째 장면</div>
+      <div><span class="scene-blank">설희의 잠입</span></div>
+      <div class="scene-body-sm">
+        설희는 게이샤 '나미다'로 변장해<br/>
+        이토에게 접근하고,<br/>
+        <strong>이토를 하얼빈으로 유인</strong>하는 데 성공한다.
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="step-badge-sm">④ 네 번째 장면</div>
+      <div><span class="scene-blank">하얼빈 거사</span></div>
+      <div class="scene-body-sm">
+        <strong>1909년 10월 26일</strong>,<br/>
+        안중근은 하얼빈 역에서<br/>
+        이토에게 총 세 발을 명중시켜 처단하고 체포된다.
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="step-badge-sm">⑤ 다섯 번째 장면</div>
+      <div><span class="scene-blank">재판과 집필</span></div>
+      <div class="scene-body-sm">
+        법정에서 이토의<br/>
+        <strong>15가지 죄상을 낭독</strong>하고<br/>
+        사형 선고 후 〈동양평화론〉을 집필한다.
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="step-badge-sm">⑥ 마지막 장면</div>
+      <div><span class="scene-blank">순국</span></div>
+      <div class="scene-body-sm">
+        <strong>1910년 3월 26일</strong>,<br/>
+        조마리아가 보낸 수의를 입고<br/>
+        "위국헌신 군인본분" 유묵을 남기며 순국한다.
+      </div>
+    </div>
+
+  </div>
+  <div class="sec-sub">
+    📌 보기 :
+    <span class="chip">하얼빈 거사</span>
+    <span class="chip">단지동맹</span>
+    <span class="chip">순국</span>
+    <span class="chip">설희의 잠입</span>
+    <span class="chip">재판과 집필</span>
+    <span class="chip">동지들의 결의</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-title">줄거리 순서 배열</div>
+  <div class="sec-sub">아래 사건을 일어난 순서대로 ( &nbsp;&nbsp;&nbsp; ) 안에 번호를 쓰세요.</div>
+  <table class="ord-table">
+    <thead>
+      <tr>
+        <th style="width:96px;text-align:center;">순서</th>
+        <th>사건 내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ord-num-cell">( &nbsp;&nbsp;⑤&nbsp;&nbsp; )</td>
+        <td>법정에서 이토의 죄상을 낭독하고 사형 선고를 받는다</td>
+      </tr>
+      <tr>
+        <td class="ord-num-cell">( &nbsp;&nbsp;①&nbsp;&nbsp; )</td>
+        <td>동지들과 단지동맹을 맺고 독립을 결의한다</td>
+      </tr>
+      <tr>
+        <td class="ord-num-cell">( &nbsp;&nbsp;⑥&nbsp;&nbsp; )</td>
+        <td>어머니의 수의를 입고 의연하게 순국한다</td>
+      </tr>
+      <tr>
+        <td class="ord-num-cell">( &nbsp;&nbsp;③&nbsp;&nbsp; )</td>
+        <td>설희가 게이샤로 변장해 이토에게 접근한다</td>
+      </tr>
+      <tr>
+        <td class="ord-num-cell">( &nbsp;&nbsp;④&nbsp;&nbsp; )</td>
+        <td>하얼빈 역에서 이토 히로부미를 처단한다</td>
+      </tr>
+      <tr>
+        <td class="ord-num-cell">( &nbsp;&nbsp;②&nbsp;&nbsp; )</td>
+        <td>동지들과 처단 작전을 구체적으로 세운다</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="sec-sub" style="margin-top:4px;">📌 정답은 ① ~ ⑥ 중 알맞은 숫자를 쓰세요.</div>
+
+  <div class="page-footer">
+    <span>🎭 뮤지컬 영웅 활동지 [교사용 답안]</span>
+    <div style="display:flex;align-items:center;gap:5px;">
+      <span>④ 줄거리 · 순서 배열</span>
+      <div class="page-num">3</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ PAGE 4 ══════════ -->
+<div class="page">
+
+  <div class="sec-title">⑤ 주요 넘버 감상</div>
+  <div class="sec-sub">각 넘버를 감상하고 느낀 점을 써 보세요.</div>
+  <div class="number-grid">
+
+    <div class="number-card">
+      <div class="num-badge">넘버 ①</div>
+      <div class="num-icon">🎵</div>
+      <div class="num-title">단지동맹</div>
+      <div class="num-desc">
+        안중근과 동지들이<br/>
+        <strong>약지를 잘라 혈서</strong>로 맹세하는<br/>
+        오프닝 넘버. 웅장한 합창.
+      </div>
+      <div class="num-q">Q. 느낀 점을 써 보세요.</div>
+      <div class="ans-note">
+        ※ 정답 없음(자유 서술)<br/>
+        예시 채점 포인트 : 동지들의 <strong>비장함·결연함</strong>,
+        약지를 자르는 장면의 <strong>희생정신</strong>이 언급되었는가?
+      </div>
+    </div>
+
+    <div class="number-card">
+      <div class="num-badge">넘버 ②</div>
+      <div class="num-icon">🎤</div>
+      <div class="num-title">영 웅</div>
+      <div class="num-desc">
+        안중근이 신념과<br/>
+        <strong>조국애를 당당하게</strong> 노래하는<br/>
+        대표 아리아 · 주제곡.
+      </div>
+      <div class="num-q">Q. 느낀 점을 써 보세요.</div>
+      <div class="ans-note">
+        ※ 정답 없음(자유 서술)<br/>
+        예시 채점 포인트 : 선율의 <strong>웅장함</strong>과 가사에 담긴
+        <strong>신념·조국애</strong>를 연결지어 서술했는가?
+      </div>
+    </div>
+
+    <div class="number-card">
+      <div class="num-badge">넘버 ③</div>
+      <div class="num-icon">⚖️</div>
+      <div class="num-title">누가 죄인인가</div>
+      <div class="num-desc">
+        재판 장면에서 안중근이<br/>
+        <strong>침략의 부당함</strong>을<br/>
+        날카롭게 고발하는 넘버.
+      </div>
+      <div class="num-q">Q. 느낀 점을 써 보세요.</div>
+      <div class="ans-note">
+        ※ 정답 없음(자유 서술)<br/>
+        예시 채점 포인트 : 안중근의 <strong>논리적 항변</strong>과
+        <strong>정의감</strong>이 드러나는 부분을 언급했는가?
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-title">⑥ 감상문 쓰기</div>
+
+  <div class="essay-box">
+    <div class="essay-q-sm">
+      <em>Q1</em>&nbsp; 가장 인상 깊었던 장면이나 노래는 무엇인가요? 그 이유도 써 보세요.
+    </div>
+    <div class="ans-note">
+      ※ 정답 없음(자유 서술) — 학생 개인의 감상을 존중하여 채점<br/>
+      예시 채점 포인트 : 특정 <strong>장면·넘버를 구체적으로 지목</strong>했는가?
+      그 이유에 <strong>줄거리·역사적 사실</strong>을 근거로 들었는가?
+    </div>
+  </div>
+
+  <div class="essay-box">
+    <div class="essay-q-sm">
+      <em>Q2</em>&nbsp; 안중근 의사의 정신이 <em>오늘날 우리에게</em> 주는 의미는 무엇인지 써 보세요.
+    </div>
+    <div class="ans-note">
+      ※ 정답 없음(자유 서술)<br/>
+      예시 채점 포인트 : <strong>애국심·희생정신·정의감</strong> 등의 가치를
+      오늘날의 삶(공동체, 평화 등)과 <strong>연결지어</strong> 서술했는가?
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>🎭 뮤지컬 영웅 활동지 [교사용 답안]</span>
+    <div style="display:flex;align-items:center;gap:5px;">
+      <span>⑤ 넘버 감상 · ⑥ 감상문</span>
+      <div class="page-num">4</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
