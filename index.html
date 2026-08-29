@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>뮤지컬 영웅 수업 자료</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Noto Serif KR',serif;
+  background: linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:30px 20px;
+}
+.wrap{
+  width:100%;
+  max-width:600px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+.main-title{
+  color:#f0e6d3;
+  font-family:'Nanum Myeongjo',serif;
+  font-size:38pt;
+  font-weight:800;
+  letter-spacing:6px;
+  text-align:center;
+  text-shadow:0 2px 12px rgba(0,0,0,0.5);
+  margin-bottom:10px;
+}
+.sub-title{
+  color:#c9a96e;
+  font-size:15pt;
+  letter-spacing:3px;
+  text-align:center;
+  margin-top:-16px;
+  margin-bottom:10px;
+}
+
+/* PPT 버튼 - 크게 */
+.btn-ppt{
+  width:100%;
+  background: linear-gradient(135deg,#c9a96e,#e8c97e,#c9a96e);
+  border:none;
+  border-radius:16px;
+  padding:40px 20px;
+  cursor:pointer;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 8px 32px rgba(201,169,110,0.4);
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+.btn-ppt:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 40px rgba(201,169,110,0.6);
+}
+.btn-ppt .icon{font-size:60pt;}
+.btn-ppt .label{
+  font-family:'Nanum Myeongjo',serif;
+  font-size:29pt;
+  font-weight:800;
+  color:#1a1a2e;
+  letter-spacing:4px;
+}
+.btn-ppt .desc{
+  font-size:13pt;
+  color:#3a3a2e;
+  letter-spacing:1px;
+}
+
+/* 아래 작은 버튼 2개 */
+.small-row{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.btn-small{
+  background:rgba(255,255,255,0.08);
+  border:2px solid rgba(255,255,255,0.25);
+  border-radius:12px;
+  padding:22px 10px;
+  cursor:pointer;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  transition:transform 0.2s, background 0.2s;
+}
+.btn-small:hover{
+  transform:translateY(-3px);
+  background:rgba(255,255,255,0.15);
+}
+.btn-small .icon{font-size:34pt;}
+.btn-small .label{
+  font-family:'Nanum Myeongjo',serif;
+  font-size:17pt;
+  font-weight:700;
+  color:#f0e6d3;
+  letter-spacing:2px;
+  text-align:center;
+}
+.btn-small .desc{
+  font-size:11pt;
+  color:#aaa;
+  letter-spacing:0.5px;
+  text-align:center;
+}
+
+.footer{
+  color:rgba(255,255,255,0.3);
+  font-size:10pt;
+  text-align:center;
+  margin-top:10px;
+  letter-spacing:1px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="main-title">뮤지컬 영웅</div>
+  <div class="sub-title">大吹打 · 수업 자료</div>
+
+  <!-- PPT 크게 -->
+  <a href="뮤지컬 영웅_PPT.html" class="btn-ppt">
+    <span class="icon">📊</span>
+    <span class="label">수업 PPT</span>
+    <span class="desc">클릭하면 바로 열립니다</span>
+  </a>
+
+  <!-- 활동지 + 답안 작게 -->
+  <div class="small-row">
+    <a href="뮤지컬 영웅_활동지.html" class="btn-small">
+      <span class="icon">📋</span>
+      <span class="label">활동지</span>
+      <span class="desc">학생용 활동지</span>
+    </a>
+    <a href="뮤지컬 영웅 퀴즈.html" class="btn-small">
+      <span class="icon">✅</span>
+      <span class="label">퀴즈</span>
+      <span class="desc">정답 포함</span>
+    </a>
+  </div>
+
+  <div class="footer">경남교육청 · 음악 수업 자료 · 2026</div>
+
+</div>
+</body>
+</html>
