@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>뮤지컬 영웅 – 퀴즈 PPT</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;font-family:'Malgun Gothic','맑은 고딕','Apple SD Gothic Neo',sans-serif;background:#07070e;overflow:hidden;color:#fff;}
+
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+.deck{width:min(100vw,177.78vh);height:min(56.25vw,100vh);position:relative;overflow:hidden;}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:36px 64px 30px;animation:sldIn .38s cubic-bezier(.22,1,.36,1);}
+.slide.active{display:flex;}
+@keyframes sldIn{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:translateX(0)}}
+
+#nav-next{position:fixed;right:22px;top:50%;transform:translateY(-50%);width:68px;height:68px;border-radius:50%;border:none;background:linear-gradient(135deg,#f7c948,#e85050);color:#fff;font-size:32px;cursor:pointer;box-shadow:0 6px 28px rgba(232,80,80,.65);display:flex;align-items:center;justify-content:center;z-index:1000;transition:transform .18s,box-shadow .18s;}
+#nav-next:hover{transform:translateY(-50%) scale(1.15);box-shadow:0 10px 40px rgba(232,80,80,.85);}
+#nav-prev{position:fixed;left:20px;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:#bbb;font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1000;transition:all .18s;}
+#nav-prev:hover{background:rgba(255,255,255,.22);color:#fff;}
+
+#prog{position:fixed;top:0;left:0;height:5px;background:linear-gradient(90deg,#f7c948,#e85050);transition:width .35s;z-index:1001;}
+#sno{position:fixed;bottom:12px;right:104px;color:rgba(255,255,255,.3);font-size:14px;z-index:1000;}
+
+.bg-title{background:radial-gradient(ellipse at 30% 40%,#1c1050 0%,#06060f 70%);}
+.bg-sec{background:linear-gradient(145deg,#0c1e40,#0a2a6a,#0c1e40);}
+.bg-q{background:linear-gradient(145deg,#0d0820,#1c0e3a,#0d0608);}
+.bg-music{background:linear-gradient(145deg,#031310,#063020,#031310);}
+.bg-score{background:linear-gradient(145deg,#160404,#360808,#160404);}
+
+.title-slide{align-items:center;justify-content:center;text-align:center;gap:16px;}
+.t-eye{font-size:clamp(15px,1.6vw,20px);letter-spacing:8px;color:#f7c948;font-weight:700;}
+.t-main{font-size:clamp(90px,12vw,160px);font-weight:900;letter-spacing:20px;color:#fff;line-height:1;text-shadow:0 0 80px rgba(247,201,72,.6),0 0 160px rgba(247,201,72,.22);}
+.t-sub{font-size:clamp(18px,2vw,26px);color:#999;letter-spacing:5px;}
+.t-pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.t-pill{background:rgba(247,201,72,.13);border:1.5px solid rgba(247,201,72,.4);border-radius:40px;padding:8px 22px;color:#f7c948;font-size:clamp(14px,1.5vw,18px);font-weight:700;}
+.t-hint{margin-top:16px;font-size:clamp(15px,1.6vw,20px);color:rgba(255,255,255,.35);animation:blink 1.8s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+
+.sec-slide{align-items:center;justify-content:center;text-align:center;gap:12px;}
+.sec-part{font-size:clamp(14px,1.5vw,18px);letter-spacing:6px;color:rgba(255,255,255,.35);font-weight:700;}
+.sec-ico{font-size:clamp(60px,9vw,100px);}
+.sec-big{font-size:clamp(44px,6.5vw,82px);font-weight:900;color:#fff;}
+.sec-line{width:80px;height:4px;background:linear-gradient(90deg,#f7c948,#e85050);border-radius:2px;margin:10px auto;}
+.sec-eng{font-size:clamp(14px,1.7vw,22px);letter-spacing:8px;color:rgba(255,255,255,.3);}
+
+.qslide{gap:14px;}
+.q-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:4px;}
+.q-badge{min-width:62px;height:62px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#f7c948,#e85050);display:flex;align-items:center;justify-content:center;font-size:clamp(22px,2.5vw,30px);font-weight:900;color:#fff;box-shadow:0 4px 20px rgba(232,80,80,.55);}
+.q-right{flex:1;display:flex;flex-direction:column;gap:6px;}
+.q-tag{display:inline-block;font-size:clamp(12px,1.2vw,15px);font-weight:700;letter-spacing:2px;background:rgba(247,201,72,.14);border:1px solid rgba(247,201,72,.38);color:#f7c948;border-radius:20px;padding:5px 15px;width:fit-content;}
+.q-txt{font-size:clamp(28px,3.8vw,52px);font-weight:900;color:#fff;line-height:1.35;}
+
+.choices{display:flex;flex-direction:column;gap:9px;width:100%;}
+.choice{display:flex;align-items:center;gap:18px;padding:clamp(11px,1.4vh,17px) clamp(18px,2.2vw,28px);border-radius:14px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.12);font-size:clamp(22px,2.8vw,38px);font-weight:700;color:#e8e8e8;cursor:pointer;transition:all .2s;user-select:none;}
+.choice:hover:not(.disabled){background:rgba(247,201,72,.11);border-color:rgba(247,201,72,.5);transform:translateX(5px);color:#fff;}
+.choice .cn{min-width:42px;height:42px;border-radius:50%;flex-shrink:0;background:rgba(247,201,72,.18);color:#f7c948;display:flex;align-items:center;justify-content:center;font-size:clamp(16px,1.8vw,22px);font-weight:900;}
+.choice.correct{background:rgba(50,205,100,.22)!important;border-color:#32cd64!important;color:#a0ffc0!important;}
+.choice.correct .cn{background:#32cd64;color:#fff;}
+.choice.wrong{background:rgba(232,80,80,.18)!important;border-color:#e85050!important;color:#ffb0b0!important;opacity:.6;}
+.choice.wrong .cn{background:#e85050;color:#fff;}
+.choice.disabled{pointer-events:none;}
+
+.tf-wrap{display:flex;gap:22px;width:100%;}
+.tf-btn{flex:1;padding:clamp(24px,4.5vh,52px) 16px;border-radius:20px;border:3px solid;font-size:clamp(38px,6vw,66px);font-weight:900;cursor:pointer;text-align:center;transition:all .2s;}
+.tf-btn.t{background:rgba(50,205,100,.09);border-color:rgba(50,205,100,.35);color:#32cd64;}
+.tf-btn.f{background:rgba(232,80,80,.09);border-color:rgba(232,80,80,.35);color:#e85050;}
+.tf-btn:hover:not(.disabled){transform:scale(1.04);}
+.tf-btn.correct{background:rgba(50,205,100,.28)!important;border-color:#32cd64!important;}
+.tf-btn.wrong{opacity:.5;}
+.tf-btn.disabled{pointer-events:none;}
+
+.ans-box{display:none;width:100%;padding:14px 22px;border-radius:12px;background:rgba(50,205,100,.11);border:2px solid rgba(50,205,100,.4);font-size:clamp(18px,2vw,26px);font-weight:700;color:#80ffaa;animation:popIn .38s cubic-bezier(.175,.885,.32,1.275);line-height:1.5;}
+.ans-box.show{display:block;}
+@keyframes popIn{from{transform:scale(.86);opacity:0}to{transform:scale(1);opacity:1}}
+
+.sab{align-self:flex-start;padding:12px 32px;border-radius:40px;border:2px solid rgba(247,201,72,.55);background:rgba(247,201,72,.11);color:#f7c948;font-size:clamp(16px,1.7vw,20px);font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:1px;}
+.sab:hover:not(:disabled){background:rgba(247,201,72,.24);border-color:#f7c948;transform:scale(1.04);}
+.sab:disabled{opacity:.3;pointer-events:none;}
+
+.blank-sent{width:100%;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.12);border-radius:14px;padding:18px 28px;font-size:clamp(20px,2.5vw,32px);color:#ddd;font-weight:700;line-height:2;}
+.bk{display:inline-block;min-width:76px;background:rgba(247,201,72,.09);border-bottom:2.5px solid #f7c948;border-radius:4px;padding:2px 8px;margin:0 3px;color:transparent;transition:color .3s;}
+.bk.open{color:#f7c948;}
+
+.music-section{width:100%;background:rgba(255,255,255,.05);border:2px solid rgba(50,205,100,.25);border-radius:18px;padding:20px 26px;display:flex;flex-direction:column;gap:14px;}
+.music-row{display:flex;align-items:center;gap:18px;}
+.music-disc{width:clamp(58px,7.5vw,86px);height:clamp(58px,7.5vw,86px);border-radius:50%;background:conic-gradient(#f7c948,#e85050,#c948f7,#48b0f7,#32cd64,#f7c948);display:flex;align-items:center;justify-content:center;font-size:clamp(26px,3.2vw,40px);flex-shrink:0;box-shadow:0 4px 22px rgba(247,201,72,.4);}
+.music-disc.spin{animation:spinD 1.8s linear infinite;}
+@keyframes spinD{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.music-meta{flex:1;}
+.music-meta .m-title{font-size:clamp(20px,2.5vw,30px);font-weight:800;color:#f7c948;margin-bottom:4px;}
+.music-meta .m-desc{font-size:clamp(13px,1.5vw,18px);color:#aaa;line-height:1.5;}
+.play-btn{padding:14px 36px;border-radius:40px;border:none;cursor:pointer;background:linear-gradient(135deg,#32cd64,#1aa048);color:#fff;font-size:clamp(18px,2vw,26px);font-weight:800;box-shadow:0 4px 18px rgba(50,205,100,.5);transition:all .2s;white-space:nowrap;}
+.play-btn:hover{transform:scale(1.07);}
+.play-btn.playing{background:linear-gradient(135deg,#e85050,#b81c1c);}
+.pbar-wrap{width:100%;height:10px;background:rgba(255,255,255,.12);border-radius:5px;overflow:hidden;cursor:pointer;}
+.pbar-fill{height:100%;width:0%;background:linear-gradient(90deg,#f7c948,#32cd64);border-radius:5px;transition:width .4s linear;}
+.time-lbl{font-size:clamp(12px,1.3vw,16px);color:#888;text-align:right;}
+
+.order-list{width:100%;background:rgba(255,255,255,.04);border-radius:14px;padding:14px 20px;display:flex;flex-direction:column;gap:8px;}
+.order-item{font-size:clamp(17px,2vw,24px);color:#ccc;font-weight:700;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.04);}
+.order-item span{color:#f7c948;font-weight:900;margin-right:10px;}
+
+.scene-card{width:100%;display:flex;gap:18px;align-items:center;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 22px;}
+.scene-ico{font-size:clamp(44px,6.5vw,76px);flex-shrink:0;}
+.scene-info strong{font-size:clamp(17px,2vw,24px);color:#f7c948;font-weight:800;display:block;margin-bottom:5px;}
+.scene-info p{font-size:clamp(14px,1.7vw,20px);color:#bbb;line-height:1.6;}
+
+.score-slide{align-items:center;justify-content:center;text-align:center;gap:14px;}
+.sc-emoji{font-size:clamp(56px,8vw,92px);}
+.sc-num{font-size:clamp(72px,11vw,136px);font-weight:900;color:#f7c948;text-shadow:0 0 60px rgba(247,201,72,.6);line-height:1;}
+.sc-denom{font-size:clamp(20px,2.3vw,30px);color:#888;margin-top:-8px;}
+.sc-msg{font-size:clamp(17px,2vw,24px);color:#ccc;background:rgba(255,255,255,.06);border-radius:12px;padding:14px 30px;max-width:600px;}
+.replay-btn{padding:14px 46px;border-radius:40px;border:none;background:linear-gradient(135deg,#f7c948,#e85050);color:#fff;font-size:clamp(17px,1.9vw,24px);font-weight:800;cursor:pointer;box-shadow:0 6px 28px rgba(232,80,80,.5);transition:transform .2s;}
+.replay-btn:hover{transform:scale(1.07);}
+
+#fx{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
+.spark{position:absolute;border-radius:50%;animation:sFly linear forwards;}
+@keyframes sFly{0%{transform:translate(0,0) scale(1);opacity:1;}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0;}}
+.cp{position:absolute;animation:cDrop linear forwards;}
+@keyframes cDrop{0%{transform:translateY(-8px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(860deg);opacity:0;}}
+</style>
+</head>
+<body>
+
+<!-- ★ 로컬 MP3 오디오 태그 ★ -->
+<audio id="audio-q15" src="정성화 - 단지동맹.mp3" preload="auto"></audio>
+<audio id="audio-q16" src="정성화 - 누가 죄인인가.mp3" preload="auto"></audio>
+<audio id="audio-q17" src="정성화 - 영웅.mp3" preload="auto"></audio>
+
+<div id="fx"></div>
+<div id="prog"></div>
+<div id="sno"></div>
+<button id="nav-prev" onclick="prevSlide()">&#8592;</button>
+<button id="nav-next" onclick="nextSlide()">&#10140;</button>
+
+<div id="stage"><div class="deck" id="deck">
+
+<!-- S0 TITLE -->
+<div class="slide bg-title title-slide active" id="s0">
+  <div class="t-eye">MUSICAL QUIZ PRESENTATION</div>
+  <div class="t-main">영 웅</div>
+  <div class="t-sub">安重根 · HERO · 뮤지컬</div>
+  <div class="t-pills">
+    <span class="t-pill">🎭 총 20문제</span>
+    <span class="t-pill">🎵 음악 감상 포함</span>
+    <span class="t-pill">📅 초연 2009</span>
+    <span class="t-pill">🎬 영화 2022</span>
+  </div>
+  <div class="t-hint">▶ 오른쪽 화살표 클릭 또는 → 키를 누르세요</div>
+</div>
+
+<!-- S1 PART1 -->
+<div class="slide bg-sec sec-slide" id="s1">
+  <div class="sec-part">PART 1 / 6</div>
+  <div class="sec-ico">🎭</div>
+  <div class="sec-big">뮤지컬 기초 지식</div>
+  <div class="sec-line"></div>
+  <div class="sec-eng">MUSICAL BASICS</div>
+</div>
+
+<!-- S2 Q1 -->
+<div class="slide bg-q qslide" id="s2">
+  <div class="q-top">
+    <div class="q-badge">1</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">뮤지컬의 3가지 핵심 요소는?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc1">
+    <div class="choice" onclick="pick(this,'q1',false)"><span class="cn">①</span>노래 · 춤 · 조명</div>
+    <div class="choice" onclick="pick(this,'q1',true)"><span class="cn">②</span>노래(음악) · 춤 · 연기</div>
+    <div class="choice" onclick="pick(this,'q1',false)"><span class="cn">③</span>대사 · 의상 · 무대</div>
+    <div class="choice" onclick="pick(this,'q1',false)"><span class="cn">④</span>연기 · 소품 · 특수효과</div>
+  </div>
+  <button class="sab" id="sab-q1" onclick="revealAnswer('q1')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q1">✅ <strong>정답 ②</strong> 노래(음악) · 춤 · 연기 — 이 세 요소가 하나로 합쳐진 <strong>종합 무대 예술</strong>입니다.</div>
+</div>
+
+<!-- S3 Q2 -->
+<div class="slide bg-q qslide" id="s3">
+  <div class="q-top">
+    <div class="q-badge">2</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">뮤지컬과 연극의 가장 큰 차이점은?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc2">
+    <div class="choice" onclick="pick(this,'q2',false)"><span class="cn">①</span>뮤지컬은 야외에서만 공연한다</div>
+    <div class="choice" onclick="pick(this,'q2',false)"><span class="cn">②</span>연극은 의상·분장이 없다</div>
+    <div class="choice" onclick="pick(this,'q2',true)"><span class="cn">③</span>뮤지컬은 음악·춤 중심, 연극은 대사 중심이다</div>
+    <div class="choice" onclick="pick(this,'q2',false)"><span class="cn">④</span>연극은 관객 수가 항상 적다</div>
+  </div>
+  <button class="sab" id="sab-q2" onclick="revealAnswer('q2')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q2">✅ <strong>정답 ③</strong> 뮤지컬 = 음악·춤 중심 / 연극 = 대사·행동 중심.</div>
+</div>
+
+<!-- S4 Q3 -->
+<div class="slide bg-q qslide" id="s4">
+  <div class="q-top">
+    <div class="q-badge">3</div>
+    <div class="q-right">
+      <span class="q-tag">빈칸 채우기</span>
+      <div class="q-txt">빈칸에 알맞은 뮤지컬 용어를 고르세요.</div>
+    </div>
+  </div>
+  <div class="blank-sent">
+    공연 전 오케스트라가 연주하는 음악 → <span class="bk" id="bk3a">서&nbsp;&nbsp;곡</span><br/>
+    공연 첫 번째로 부르는 노래 → <span class="bk" id="bk3b">오프닝&nbsp;넘버</span><br/>
+    공연 후 배우들이 인사하는 장면 → <span class="bk" id="bk3c">커튼&nbsp;콜</span>
+  </div>
+  <div class="choices" id="qc3">
+    <div class="choice" onclick="pick(this,'q3',false)"><span class="cn">①</span>아리아 / 피날레 / 인터미션</div>
+    <div class="choice" onclick="pick(this,'q3',true)"><span class="cn">②</span>서곡 / 오프닝 넘버 / 커튼콜</div>
+    <div class="choice" onclick="pick(this,'q3',false)"><span class="cn">③</span>프로덕션 넘버 / 서곡 / 아리아</div>
+    <div class="choice" onclick="pick(this,'q3',false)"><span class="cn">④</span>커튼콜 / 아리아 / 서곡</div>
+  </div>
+  <button class="sab" id="sab-q3" onclick="revealAnswer('q3')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q3">✅ <strong>정답 ②</strong> 서곡(Overture) → 오프닝 넘버 → … → 커튼콜(Curtain Call)</div>
+</div>
+
+<!-- S5 PART2 -->
+<div class="slide bg-sec sec-slide" id="s5">
+  <div class="sec-part">PART 2 / 6</div>
+  <div class="sec-ico">🏯</div>
+  <div class="sec-big">뮤지컬 영웅 정보</div>
+  <div class="sec-line"></div>
+  <div class="sec-eng">ABOUT THE MUSICAL</div>
+</div>
+
+<!-- S6 Q4 -->
+<div class="slide bg-q qslide" id="s6">
+  <div class="q-top">
+    <div class="q-badge">4</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">뮤지컬 「영웅」이 처음 공연된 해는?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc4">
+    <div class="choice" onclick="pick(this,'q4',false)"><span class="cn">①</span>2005년</div>
+    <div class="choice" onclick="pick(this,'q4',false)"><span class="cn">②</span>2007년</div>
+    <div class="choice" onclick="pick(this,'q4',true)"><span class="cn">③</span>2009년</div>
+    <div class="choice" onclick="pick(this,'q4',false)"><span class="cn">④</span>2012년</div>
+  </div>
+  <button class="sab" id="sab-q4" onclick="revealAnswer('q4')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q4">✅ <strong>정답 ③ 2009년</strong> — 안중근 의사 의거 100주년 기념 초연.</div>
+</div>
+
+<!-- S7 Q5 -->
+<div class="slide bg-q qslide" id="s7">
+  <div class="q-top">
+    <div class="q-badge">5</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">뮤지컬 「영웅」이 영화로 개봉된 해는?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc5">
+    <div class="choice" onclick="pick(this,'q5',false)"><span class="cn">①</span>2018년</div>
+    <div class="choice" onclick="pick(this,'q5',false)"><span class="cn">②</span>2020년</div>
+    <div class="choice" onclick="pick(this,'q5',false)"><span class="cn">③</span>2021년</div>
+    <div class="choice" onclick="pick(this,'q5',true)"><span class="cn">④</span>2022년</div>
+  </div>
+  <button class="sab" id="sab-q5" onclick="revealAnswer('q5')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q5">✅ <strong>정답 ④ 2022년</strong> — 대한민국 최초 오리지널 뮤지컬 영화.</div>
+</div>
+
+<!-- S8 Q6 -->
+<div class="slide bg-q qslide" id="s8">
+  <div class="q-top">
+    <div class="q-badge">6</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">뮤지컬 「영웅」의 주인공은?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc6">
+    <div class="choice" onclick="pick(this,'q6',false)"><span class="cn">①</span>김구</div>
+    <div class="choice" onclick="pick(this,'q6',true)"><span class="cn">②</span>안중근</div>
+    <div class="choice" onclick="pick(this,'q6',false)"><span class="cn">③</span>윤봉길</div>
+    <div class="choice" onclick="pick(this,'q6',false)"><span class="cn">④</span>이순신</div>
+  </div>
+  <button class="sab" id="sab-q6" onclick="revealAnswer('q6')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q6">✅ <strong>정답 ② 안중근</strong> — 1909년 하얼빈에서 이토 히로부미를 저격한 독립운동가.</div>
+</div>
+
+<!-- S9 Q7 -->
+<div class="slide bg-q qslide" id="s9">
+  <div class="q-top">
+    <div class="q-badge">7</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">안중근이 하얼빈에서 처단한 인물은?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc7">
+    <div class="choice" onclick="pick(this,'q7',false)"><span class="cn">①</span>야마가타 아리토모</div>
+    <div class="choice" onclick="pick(this,'q7',true)"><span class="cn">②</span>이토 히로부미</div>
+    <div class="choice" onclick="pick(this,'q7',false)"><span class="cn">③</span>고토 쇼지로</div>
+    <div class="choice" onclick="pick(this,'q7',false)"><span class="cn">④</span>치바 도시치</div>
+  </div>
+  <button class="sab" id="sab-q7" onclick="revealAnswer('q7')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q7">✅ <strong>정답 ② 이토 히로부미</strong> — 초대 조선통감. 1909년 10월 26일 하얼빈역 저격.</div>
+</div>
+
+<!-- S10 PART3 -->
+<div class="slide bg-sec sec-slide" id="s10">
+  <div class="sec-part">PART 3 / 6</div>
+  <div class="sec-ico">👤</div>
+  <div class="sec-big">주요 배역</div>
+  <div class="sec-line"></div>
+  <div class="sec-eng">KEY CHARACTERS</div>
+</div>
+
+<!-- S11 Q8 -->
+<div class="slide bg-q qslide" id="s11">
+  <div class="q-top">
+    <div class="q-badge">8</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">기생으로 변장해 안중근을 돕는 여주인공은?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc8">
+    <div class="choice" onclick="pick(this,'q8',false)"><span class="cn">①</span>조마리아</div>
+    <div class="choice" onclick="pick(this,'q8',false)"><span class="cn">②</span>명성황후</div>
+    <div class="choice" onclick="pick(this,'q8',true)"><span class="cn">③</span>설희</div>
+    <div class="choice" onclick="pick(this,'q8',false)"><span class="cn">④</span>유관순</div>
+  </div>
+  <button class="sab" id="sab-q8" onclick="revealAnswer('q8')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q8">✅ <strong>정답 ③ 설희</strong> — 기생으로 변장해 이토 정보 수집, 의거를 도운 여주인공.</div>
+</div>
+
+<!-- S12 Q9 -->
+<div class="slide bg-q qslide" id="s12">
+  <div class="q-top">
+    <div class="q-badge">9</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">수의를 지어 보내며 「당당히 순국하라」 전한 안중근의 어머니는?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc9">
+    <div class="choice" onclick="pick(this,'q9',false)"><span class="cn">①</span>유관순</div>
+    <div class="choice" onclick="pick(this,'q9',false)"><span class="cn">②</span>김설화</div>
+    <div class="choice" onclick="pick(this,'q9',true)"><span class="cn">③</span>조마리아</div>
+    <div class="choice" onclick="pick(this,'q9',false)"><span class="cn">④</span>박정심</div>
+  </div>
+  <button class="sab" id="sab-q9" onclick="revealAnswer('q9')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q9">✅ <strong>정답 ③ 조마리아</strong> — 처형 직전 수의를 지어 보낸 위대한 어머니.</div>
+</div>
+
+<!-- S13 Q10 -->
+<div class="slide bg-q qslide" id="s13">
+  <div class="q-top">
+    <div class="q-badge">10</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">단지동맹(斷指同盟)에서 「斷指」의 의미는?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc10">
+    <div class="choice" onclick="pick(this,'q10',false)"><span class="cn">①</span>단결하여 앞으로 나아감</div>
+    <div class="choice" onclick="pick(this,'q10',true)"><span class="cn">②</span>손가락(指)을 자름(斷)</div>
+    <div class="choice" onclick="pick(this,'q10',false)"><span class="cn">③</span>칼로 서약함</div>
+    <div class="choice" onclick="pick(this,'q10',false)"><span class="cn">④</span>편지를 끊음</div>
+  </div>
+  <button class="sab" id="sab-q10" onclick="revealAnswer('q10')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q10">✅ <strong>정답 ② 손가락을 자름</strong> — 안중근·동지 11인이 약지를 잘라 혈서로 독립 맹세.</div>
+</div>
+
+<!-- S14 PART4 -->
+<div class="slide bg-sec sec-slide" id="s14">
+  <div class="sec-part">PART 4 / 6</div>
+  <div class="sec-ico">📜</div>
+  <div class="sec-big">줄거리 &amp; 장면</div>
+  <div class="sec-line"></div>
+  <div class="sec-eng">STORY &amp; SCENES</div>
+</div>
+
+<!-- S15 Q11 -->
+<div class="slide bg-q qslide" id="s15">
+  <div class="q-top">
+    <div class="q-badge">11</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">안중근이 이토 히로부미를 저격한 날짜는?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc11">
+    <div class="choice" onclick="pick(this,'q11',false)"><span class="cn">①</span>1909년 3월 1일</div>
+    <div class="choice" onclick="pick(this,'q11',true)"><span class="cn">②</span>1909년 10월 26일</div>
+    <div class="choice" onclick="pick(this,'q11',false)"><span class="cn">③</span>1910년 2월 14일</div>
+    <div class="choice" onclick="pick(this,'q11',false)"><span class="cn">④</span>1909년 8월 15일</div>
+  </div>
+  <button class="sab" id="sab-q11" onclick="revealAnswer('q11')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q11">✅ <strong>정답 ② 1909년 10월 26일</strong> — 하얼빈역. 체포 후 뤼순 감옥 이송.</div>
+</div>
+
+<!-- S16 Q12 -->
+<div class="slide bg-q qslide" id="s16">
+  <div class="q-top">
+    <div class="q-badge">12</div>
+    <div class="q-right">
+      <span class="q-tag">장면 퀴즈</span>
+      <div class="q-txt">다음 장면 설명에 해당하는 사건은?</div>
+    </div>
+  </div>
+  <div class="scene-card">
+    <div class="scene-ico">⚔️</div>
+    <div class="scene-info">
+      <strong>이 장면은?</strong>
+      <p>안중근과 동지 11명이 약지를 잘라 태극기에 혈서를 적으며 이토 처단을 결의 · 1909년 2월 · 연해주</p>
+    </div>
+  </div>
+  <div class="choices" id="qc12">
+    <div class="choice" onclick="pick(this,'q12',false)"><span class="cn">①</span>하얼빈 의거</div>
+    <div class="choice" onclick="pick(this,'q12',false)"><span class="cn">②</span>법정 죄상 낭독</div>
+    <div class="choice" onclick="pick(this,'q12',true)"><span class="cn">③</span>단지동맹</div>
+    <div class="choice" onclick="pick(this,'q12',false)"><span class="cn">④</span>어머니 수의 전달</div>
+  </div>
+  <button class="sab" id="sab-q12" onclick="revealAnswer('q12')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q12">✅ <strong>정답 ③ 단지동맹</strong> — 뮤지컬 영웅의 핵심 장면.</div>
+</div>
+
+<!-- S17 Q13 -->
+<div class="slide bg-q qslide" id="s17">
+  <div class="q-top">
+    <div class="q-badge">13</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">안중근이 법정에서 이토의 죄상을 몇 가지 낭독했나요?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc13">
+    <div class="choice" onclick="pick(this,'q13',false)"><span class="cn">①</span>10가지</div>
+    <div class="choice" onclick="pick(this,'q13',false)"><span class="cn">②</span>12가지</div>
+    <div class="choice" onclick="pick(this,'q13',true)"><span class="cn">③</span>15가지</div>
+    <div class="choice" onclick="pick(this,'q13',false)"><span class="cn">④</span>20가지</div>
+  </div>
+  <button class="sab" id="sab-q13" onclick="revealAnswer('q13')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q13">✅ <strong>정답 ③ 15가지</strong> — 이토의 죄목 15개를 열거하며 의거 정당성 주장.</div>
+</div>
+
+<!-- S18 Q14 -->
+<div class="slide bg-q qslide" id="s18">
+  <div class="q-top">
+    <div class="q-badge">14</div>
+    <div class="q-right">
+      <span class="q-tag">순서 배열</span>
+      <div class="q-txt">줄거리를 시간 순서대로 나열한 것은?</div>
+    </div>
+  </div>
+  <div class="order-list">
+    <div class="order-item"><span>ㄱ.</span>하얼빈 의거</div>
+    <div class="order-item"><span>ㄴ.</span>단지동맹 결성</div>
+    <div class="order-item"><span>ㄷ.</span>법정 죄상 낭독</div>
+    <div class="order-item"><span>ㄹ.</span>사형 선고 · 수의 전달</div>
+    <div class="order-item"><span>ㅁ.</span>순국 (1910. 3. 26)</div>
+  </div>
+  <div class="choices" id="qc14" style="margin-top:2px;">
+    <div class="choice" onclick="pick(this,'q14',false)"><span class="cn">①</span>ㄱ → ㄴ → ㄷ → ㄹ → ㅁ</div>
+    <div class="choice" onclick="pick(this,'q14',true)"><span class="cn">②</span>ㄴ → ㄱ → ㄷ → ㄹ → ㅁ</div>
+    <div class="choice" onclick="pick(this,'q14',false)"><span class="cn">③</span>ㄴ → ㄷ → ㄱ → ㄹ → ㅁ</div>
+    <div class="choice" onclick="pick(this,'q14',false)"><span class="cn">④</span>ㄱ → ㄷ → ㄴ → ㄹ → ㅁ</div>
+  </div>
+  <button class="sab" id="sab-q14" onclick="revealAnswer('q14')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q14">✅ <strong>정답 ② ㄴ→ㄱ→ㄷ→ㄹ→ㅁ</strong> 단지동맹→하얼빈→법정→수의→순국</div>
+</div>
+
+<!-- S19 PART5 -->
+<div class="slide bg-sec sec-slide" id="s19">
+  <div class="sec-part">PART 5 / 6</div>
+  <div class="sec-ico">🎵</div>
+  <div class="sec-big">음악 감상 퀴즈</div>
+  <div class="sec-line"></div>
+  <div class="sec-eng">▶ 재생 버튼 클릭 → 음악 감상 → 정답 선택</div>
+</div>
+
+<!-- S20 Q15 단지동맹 -->
+<div class="slide bg-music qslide" id="s20">
+  <div class="q-top">
+    <div class="q-badge">15</div>
+    <div class="q-right">
+      <span class="q-tag">🎵 음악 감상</span>
+      <div class="q-txt">▶ 재생 후 이 넘버의 제목을 고르세요.</div>
+    </div>
+  </div>
+  <div class="music-section">
+    <div class="music-row">
+      <div class="music-disc" id="disc-q15">🎵</div>
+      <div class="music-meta">
+        <div class="m-title">뮤지컬 「영웅」 넘버</div>
+        <div class="m-desc">안중근과 동지들이 약지를 잘라 혈서로 맹세하는 장면의 노래</div>
+      </div>
+      <button class="play-btn" id="pbtn-q15" onclick="toggleAudio('q15')">▶ 재생</button>
+    </div>
+    <div class="pbar-wrap" onclick="seekAudio('q15',event)">
+      <div class="pbar-fill" id="pbar-q15"></div>
+    </div>
+    <div class="time-lbl" id="tlbl-q15">0:00 / --:--</div>
+  </div>
+  <div class="choices" id="qc15">
+    <div class="choice" onclick="pick(this,'q15',false)"><span class="cn">①</span>누가 죄인인가</div>
+    <div class="choice" onclick="pick(this,'q15',true)"><span class="cn">②</span>단지동맹</div>
+    <div class="choice" onclick="pick(this,'q15',false)"><span class="cn">③</span>영 웅</div>
+    <div class="choice" onclick="pick(this,'q15',false)"><span class="cn">④</span>그날을 기약하며</div>
+  </div>
+  <button class="sab" id="sab-q15" onclick="revealAnswer('q15')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q15">✅ <strong>정답 ② 단지동맹</strong> — 혈서로 독립을 맹세하는 장면의 강렬한 넘버.</div>
+</div>
+
+<!-- S21 Q16 누가죄인인가 -->
+<div class="slide bg-music qslide" id="s21">
+  <div class="q-top">
+    <div class="q-badge">16</div>
+    <div class="q-right">
+      <span class="q-tag">🎵 음악 감상</span>
+      <div class="q-txt">▶ 재생 후 이 넘버의 제목을 고르세요.</div>
+    </div>
+  </div>
+  <div class="music-section">
+    <div class="music-row">
+      <div class="music-disc" id="disc-q16">🎵</div>
+      <div class="music-meta">
+        <div class="m-title">뮤지컬 「영웅」 넘버</div>
+        <div class="m-desc">법정에서 이토의 15가지 죄상을 낭독하며 부르는 노래</div>
+      </div>
+      <button class="play-btn" id="pbtn-q16" onclick="toggleAudio('q16')">▶ 재생</button>
+    </div>
+    <div class="pbar-wrap" onclick="seekAudio('q16',event)">
+      <div class="pbar-fill" id="pbar-q16"></div>
+    </div>
+    <div class="time-lbl" id="tlbl-q16">0:00 / --:--</div>
+  </div>
+  <div class="choices" id="qc16">
+    <div class="choice" onclick="pick(this,'q16',false)"><span class="cn">①</span>단지동맹</div>
+    <div class="choice" onclick="pick(this,'q16',false)"><span class="cn">②</span>영 웅</div>
+    <div class="choice" onclick="pick(this,'q16',true)"><span class="cn">③</span>누가 죄인인가</div>
+    <div class="choice" onclick="pick(this,'q16',false)"><span class="cn">④</span>동양 평화의 노래</div>
+  </div>
+  <button class="sab" id="sab-q16" onclick="revealAnswer('q16')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q16">✅ <strong>정답 ③ 누가 죄인인가</strong> — 법정에서 이토의 죄목을 열거하며 당당히 부르는 넘버.</div>
+</div>
+
+<!-- S22 Q17 영웅 -->
+<div class="slide bg-music qslide" id="s22">
+  <div class="q-top">
+    <div class="q-badge">17</div>
+    <div class="q-right">
+      <span class="q-tag">🎵 음악 감상</span>
+      <div class="q-txt">▶ 재생 후 이 넘버의 제목을 고르세요.</div>
+    </div>
+  </div>
+  <div class="music-section">
+    <div class="music-row">
+      <div class="music-disc" id="disc-q17">🎵</div>
+      <div class="music-meta">
+        <div class="m-title">뮤지컬 「영웅」 넘버</div>
+        <div class="m-desc">안중근이 자신의 사명과 결의를 노래하는 타이틀 넘버</div>
+      </div>
+      <button class="play-btn" id="pbtn-q17" onclick="toggleAudio('q17')">▶ 재생</button>
+    </div>
+    <div class="pbar-wrap" onclick="seekAudio('q17',event)">
+      <div class="pbar-fill" id="pbar-q17"></div>
+    </div>
+    <div class="time-lbl" id="tlbl-q17">0:00 / --:--</div>
+  </div>
+  <div class="choices" id="qc17">
+    <div class="choice" onclick="pick(this,'q17',false)"><span class="cn">①</span>누가 죄인인가</div>
+    <div class="choice" onclick="pick(this,'q17',false)"><span class="cn">②</span>단지동맹</div>
+    <div class="choice" onclick="pick(this,'q17',true)"><span class="cn">③</span>영 웅</div>
+    <div class="choice" onclick="pick(this,'q17',false)"><span class="cn">④</span>하얼빈의 아침</div>
+  </div>
+  <button class="sab" id="sab-q17" onclick="revealAnswer('q17')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q17">✅ <strong>정답 ③ 영 웅</strong> — 타이틀 넘버. 안중근의 결의와 사명감을 웅장하게 표현.</div>
+</div>
+
+<!-- S23 PART6 -->
+<div class="slide bg-sec sec-slide" id="s23">
+  <div class="sec-part">PART 6 / 6</div>
+  <div class="sec-ico">🔍</div>
+  <div class="sec-big">심화 퀴즈</div>
+  <div class="sec-line"></div>
+  <div class="sec-eng">ADVANCED QUIZ</div>
+</div>
+
+<!-- S24 Q18 -->
+<div class="slide bg-q qslide" id="s24">
+  <div class="q-top">
+    <div class="q-badge">18</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">뤼순 감옥에서 안중근의 인품에 감화된 일본인 간수는?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc18">
+    <div class="choice" onclick="pick(this,'q18',false)"><span class="cn">①</span>야마구치 히로시</div>
+    <div class="choice" onclick="pick(this,'q18',true)"><span class="cn">②</span>치바 도시치</div>
+    <div class="choice" onclick="pick(this,'q18',false)"><span class="cn">③</span>하라 다카시</div>
+    <div class="choice" onclick="pick(this,'q18',false)"><span class="cn">④</span>나가이 겐이치</div>
+  </div>
+  <button class="sab" id="sab-q18" onclick="revealAnswer('q18')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q18">✅ <strong>정답 ② 치바 도시치</strong> — 실존 인물. 안중근에게 감동받아 평생 그를 기렸습니다.</div>
+</div>
+
+<!-- S25 Q19 -->
+<div class="slide bg-q qslide" id="s25">
+  <div class="q-top">
+    <div class="q-badge">19</div>
+    <div class="q-right">
+      <span class="q-tag">O / X</span>
+      <div class="q-txt">조마리아는 아들에게<br/>「항소하지 말고 당당히 순국하라」고 전했다.</div>
+    </div>
+  </div>
+  <div class="tf-wrap" id="qc19">
+    <div class="tf-btn t" onclick="pick(this,'q19',true)">⭕ O</div>
+    <div class="tf-btn f" onclick="pick(this,'q19',false)">❌ X</div>
+  </div>
+  <button class="sab" id="sab-q19" onclick="revealAnswer('q19')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q19">✅ <strong>정답 O</strong> — "비겁하게 삶을 구걸하지 말고 당당히 죽으라"고 전했습니다.</div>
+</div>
+
+<!-- S26 Q20 -->
+<div class="slide bg-q qslide" id="s26">
+  <div class="q-top">
+    <div class="q-badge">20</div>
+    <div class="q-right">
+      <span class="q-tag">객관식</span>
+      <div class="q-txt">안중근 의사가 뤼순 감옥에서 순국한 날은?</div>
+    </div>
+  </div>
+  <div class="choices" id="qc20">
+    <div class="choice" onclick="pick(this,'q20',false)"><span class="cn">①</span>1910년 1월 1일</div>
+    <div class="choice" onclick="pick(this,'q20',false)"><span class="cn">②</span>1910년 2월 14일</div>
+    <div class="choice" onclick="pick(this,'q20',true)"><span class="cn">③</span>1910년 3월 26일</div>
+    <div class="choice" onclick="pick(this,'q20',false)"><span class="cn">④</span>1910년 8월 29일</div>
+  </div>
+  <button class="sab" id="sab-q20" onclick="revealAnswer('q20')">💡 정답 보기</button>
+  <div class="ans-box" id="ans-q20">✅ <strong>정답 ③ 1910년 3월 26일</strong> — 뤼순 감옥. 향년 31세. 동양 평화를 염원하며 순국.</div>
+</div>
+
+<!-- S27 SCORE -->
+<div class="slide bg-score score-slide" id="s27">
+  <div class="sc-emoji" id="sc-emoji">🎉</div>
+  <div class="sc-num" id="sc-num">--</div>
+  <div class="sc-denom">점 / 20점 만점</div>
+  <div class="sc-msg" id="sc-msg">퀴즈를 완료하셨습니다!</div>
+  <div style="color:#777;font-size:clamp(14px,1.6vw,18px);line-height:2;text-align:center;margin-top:4px;">
+    안중근 의사의 숭고한 희생을 기억하며<br/>
+    뮤지컬 「영웅」이 전하는 감동을 오래 간직하세요<br/>
+    <strong style="color:#f7c948;font-size:1.3em">大韓獨立 · 東洋平和</strong>
+  </div>
+  <button class="replay-btn" onclick="restartQuiz()">🔄 처음부터 다시 풀기</button>
+</div>
+
+</div></div>
+
+<script>
+const AUDIO_MAP = {
+  'q15': document.getElementById('audio-q15'),
+  'q16': document.getElementById('audio-q16'),
+  'q17': document.getElementById('audio-q17')
+};
+const audioTimers = {};
+
+function toggleAudio(qId){
+  const audio = AUDIO_MAP[qId];
+  if(!audio) return;
+  Object.entries(AUDIO_MAP).forEach(([k,a])=>{
+    if(k !== qId && !a.paused){
+      a.pause(); clearInterval(audioTimers[k]);
+      setPlayBtn(k,false); setDiscSpin(k,false);
+    }
+  });
+  if(!audio.paused){
+    audio.pause(); clearInterval(audioTimers[qId]);
+    setPlayBtn(qId,false); setDiscSpin(qId,false);
+  } else {
+    audio.play().then(()=>{
+      setPlayBtn(qId,true); setDiscSpin(qId,true);
+      audioTimers[qId]=setInterval(()=>updateBar(qId),300);
+    }).catch(()=>{ setPlayBtn(qId,false,'⚠️ 재생오류'); });
+  }
+  audio.onended=()=>{
+    clearInterval(audioTimers[qId]);
+    setPlayBtn(qId,false); setDiscSpin(qId,false);
+    const bar=document.getElementById('pbar-'+qId); if(bar) bar.style.width='0%';
+    const lbl=document.getElementById('tlbl-'+qId); if(lbl) lbl.textContent='0:00 / --:--';
+  };
+}
+
+function seekAudio(qId,e){
+  const audio=AUDIO_MAP[qId]; if(!audio||!audio.duration) return;
+  audio.currentTime=(e.offsetX/e.currentTarget.clientWidth)*audio.duration;
+}
+function updateBar(qId){
+  const audio=AUDIO_MAP[qId]; if(!audio) return;
+  const cur=audio.currentTime,dur=audio.duration||0;
+  const bar=document.getElementById('pbar-'+qId); if(bar) bar.style.width=(dur?cur/dur*100:0)+'%';
+  const lbl=document.getElementById('tlbl-'+qId); if(lbl) lbl.textContent=fmt(cur)+' / '+(dur?fmt(dur):'--:--');
+}
+function fmt(s){s=Math.floor(s);return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60);}
+function setPlayBtn(qId,playing,label){
+  const btn=document.getElementById('pbtn-'+qId); if(!btn) return;
+  if(label){btn.textContent=label;btn.classList.remove('playing');return;}
+  btn.textContent=playing?'⏸ 일시정지':'▶ 재생';
+  playing?btn.classList.add('playing'):btn.classList.remove('playing');
+}
+function setDiscSpin(qId,on){
+  const d=document.getElementById('disc-'+qId); if(!d) return;
+  on?d.classList.add('spin'):d.classList.remove('spin');
+}
+
+let AC;
+function getAC(){if(!AC) AC=new(window.AudioContext||window.webkitAudioContext)();return AC;}
+function note(f,type,start,dur,vol){
+  const c=getAC(),o=c.createOscillator(),g=c.createGain();
+  o.type=type;o.frequency.value=f;
+  const t=c.currentTime+start;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.02);
+  g.gain.exponentialRampToValueAtTime(.001,t+dur);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+dur+.02);
+}
+function noiseHit(start,dur,vol){
+  const c=getAC(),buf=c.createBuffer(1,~~(c.sampleRate*dur),c.sampleRate);
+  const d=buf.getChannelData(0);for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1);
+  const src=c.createBufferSource(),g=c.createGain();src.buffer=buf;
+  const t=c.currentTime+start;
+  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+  src.connect(g);g.connect(c.destination);src.start(t);src.stop(t+dur);
+}
+function playClick(){note(720,'sine',0,.07,.12);}
+function playWrong(){note(260,'sawtooth',0,.06,.22);note(200,'sawtooth',.08,.28,.18);}
+function playFanfare(){
+  noiseHit(0,.6,.18);noiseHit(.05,.8,.14);
+  [[392,.00],[494,.07],[587,.14],[698,.21],[784,.28],[880,.35],[988,.42],[1047,.49],[1175,.56],[1319,.63]]
+    .forEach(([f,t])=>note(f,'triangle',t,.18,.34));
+  [[98,.00],[123,.14],[147,.28],[196,.42],[147,.56],[196,.70]].forEach(([f,t])=>note(f,'sine',t,.28,.20));
+  [0,.14,.28,.42,.56,.70].forEach(t=>noiseHit(t,.1,.16));
+  setTimeout(()=>{
+    [523,659,784,988,1175,1319].forEach((f,i)=>note(f,'triangle',i*.03,.8,.32));
+    noiseHit(0,.4,.22);
+  },720);
+}
+
+const FX=document.getElementById('fx');
+const COLS=['#f7c948','#e85050','#32cd64','#48b0f7','#c948f7','#ff8c00','#fff','#00e5ff','#ff69b4','#adff2f'];
+function firework(x,y,n=34){
+  for(let i=0;i<n;i++){
+    const s=document.createElement('div');s.className='spark';
+    const a=(360/n)*i,dist=80+Math.random()*130,sz=5+Math.random()*9;
+    s.style.cssText=`left:${x}px;top:${y}px;width:${sz}px;height:${sz}px;
+      background:${COLS[~~(Math.random()*COLS.length)]};
+      --dx:${Math.cos(a*Math.PI/180)*dist}px;--dy:${Math.sin(a*Math.PI/180)*dist}px;
+      animation-duration:${.55+Math.random()*.55}s;box-shadow:0 0 8px currentColor;`;
+    FX.appendChild(s);setTimeout(()=>s.remove(),1300);
+  }
+}
+function confetti(n=80){
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div');c.className='cp';
+    const w=5+Math.random()*9,h=4+Math.random()*7;
+    c.style.cssText=`left:${Math.random()*100}vw;top:-10px;width:${w}px;height:${h}px;
+      background:${COLS[~~(Math.random()*COLS.length)]};
+      animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.5}s;
+      border-radius:${Math.random()>.5?'50%':'3px'};`;
+    FX.appendChild(c);setTimeout(()=>c.remove(),3600);
+  }
+}
+function bigCelebration(ex,ey){
+  const pts=[[.15,.25],[.5,.18],[.85,.25],[.3,.55],[.7,.55]];
+  if(ex!=null) firework(ex,ey,42);
+  pts.forEach(([rx,ry],i)=>setTimeout(()=>firework(window.innerWidth*rx,window.innerHeight*ry,28),i*130));
+  confetti(90);playFanfare();
+}
+
+const TOTAL=28;let cur=0,score=0;const done={};
+function goTo(idx){
+  if(idx<0||idx>=TOTAL) return;
+  playClick();
+  Object.entries(AUDIO_MAP).forEach(([k,a])=>{
+    if(!a.paused){a.pause();clearInterval(audioTimers[k]);setPlayBtn(k,false);setDiscSpin(k,false);}
+  });
+  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+idx).classList.add('active');
+  cur=idx;
+  document.getElementById('prog').style.width=((idx/(TOTAL-1))*100)+'%';
+  document.getElementById('sno').textContent=(idx+1)+' / '+TOTAL;
+  if(idx===27) renderScore();
+}
+function nextSlide(){goTo(cur+1);}
+function prevSlide(){goTo(cur-1);}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ') nextSlide();
+  if(e.key==='ArrowLeft') prevSlide();
+});
+
+function pick(el,qId,isCorrect){
+  if(done[qId]) return;
+  done[qId]=isCorrect?'correct':'wrong';
+  getAC();
+  const con=el.closest('.choices,.tf-wrap');
+  con.querySelectorAll('.choice,.tf-btn').forEach(c=>c.classList.add('disabled'));
+  if(isCorrect){
+    el.classList.add('correct');score++;
+    const r=el.getBoundingClientRect();
+    firework(r.left+r.width/2,r.top+r.height/2,38);
+    firework(r.left+r.width/2+50,r.top-30,20);
+    confetti(50);playFanfare();
+    const sb=document.getElementById('sab-'+qId);if(sb) sb.disabled=true;
+  } else {
+    el.classList.add('wrong');playWrong();
+    con.querySelectorAll('.choice,.tf-btn').forEach(c=>{
+      if(c.getAttribute('onclick')&&c.getAttribute('onclick').includes(',true)'))
+        c.classList.add('correct');
+    });
+  }
+  showAns(qId);openBlanks(qId);
+}
+
+function revealAnswer(qId){
+  if(done[qId]) return;
+  done[qId]='reveal';
+  const sb=document.getElementById('sab-'+qId);if(sb) sb.disabled=true;
+  const con=document.getElementById('qc'+qId.replace('q',''));
+  if(con){
+    con.querySelectorAll('.choice,.tf-btn').forEach(c=>{
+      c.classList.add('disabled');
+      if(c.getAttribute('onclick')&&c.getAttribute('onclick').includes(',true)'))
+        c.classList.add('correct');
+    });
+  }
+  openBlanks(qId);showAns(qId);bigCelebration();
+}
+
+function showAns(qId){const b=document.getElementById('ans-'+qId);if(b) b.classList.add('show');}
+function openBlanks(qId){
+  ['a','b','c'].forEach(x=>{
+    const b=document.getElementById('bk'+qId.replace('q','')+x);if(b) b.classList.add('open');
+  });
+}
+
+function renderScore(){
+  document.getElementById('sc-num').textContent=score;
+  const e=document.getElementById('sc-emoji'),m=document.getElementById('sc-msg');
+  if(score>=18){e.textContent='🏆';m.textContent='완벽해요! 뮤지컬 영웅 전문가입니다! 🎉';}
+  else if(score>=14){e.textContent='🥇';m.textContent='훌륭해요! 조금만 더 복습하면 완벽합니다.';}
+  else if(score>=10){e.textContent='🥈';m.textContent='잘했어요! 다시 한 번 내용을 확인해 보세요.';}
+  else{e.textContent='📚';m.textContent='더 열심히 공부해 봅시다. 다시 도전해 보세요!';}
+  setTimeout(()=>{for(let i=0;i<7;i++) setTimeout(()=>bigCelebration(),i*460);},350);
+}
+
+function restartQuiz(){
+  Object.entries(AUDIO_MAP).forEach(([k,a])=>{
+    a.pause();a.currentTime=0;clearInterval(audioTimers[k]);
+    setPlayBtn(k,false,'▶ 재생');setDiscSpin(k,false);
+    const bar=document.getElementById('pbar-'+k);if(bar) bar.style.width='0%';
+    const lbl=document.getElementById('tlbl-'+k);if(lbl) lbl.textContent='0:00 / --:--';
+  });
+  score=0;Object.keys(done).forEach(k=>delete done[k]);
+  document.querySelectorAll('.choice,.tf-btn').forEach(c=>c.classList.remove('correct','wrong','disabled'));
+  document.querySelectorAll('.ans-box').forEach(a=>a.classList.remove('show'));
+  document.querySelectorAll('.bk').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.sab').forEach(b=>b.disabled=false);
+  goTo(0);
+}
+
+goTo(0);
+</script>
+</body>
+</html>
